@@ -2,10 +2,11 @@
 {
     public class ItemDaVenda
     {
+
         public Guid ItemDaVendaId { get; set; }
         public Guid Vendaid { get; set; }
         //relacionamento com a tabela produto//
-        public Guid? Venda { get; set; }
+        public Venda? Venda { get; set; }
         public Guid ProdutoId { get; set; }
         public Produto? Produto { get; set; }
 

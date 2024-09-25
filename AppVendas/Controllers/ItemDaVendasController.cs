@@ -22,7 +22,7 @@ namespace AppVendas.Controllers
         // GET: ItemDaVendas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ItemDaVenda.Include(i => i.Produto);
+            var applicationDbContext = _context.ItemDaVenda.Include(i => i.Produto).Include(i => i.Venda);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace AppVendas.Controllers
 
             var itemDaVenda = await _context.ItemDaVenda
                 .Include(i => i.Produto)
+                .Include(i => i.Venda)
                 .FirstOrDefaultAsync(m => m.ItemDaVendaId == id);
             if (itemDaVenda == null)
             {
@@ -49,6 +50,7 @@ namespace AppVendas.Controllers
         public IActionResult Create()
         {
             ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "ProdutoId");
+            ViewData["Vendaid"] = new SelectList(_context.Vendas, "VendaId", "VendaId");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace AppVendas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemDaVendaId,Vendaid,Venda,ProdutoId,QtdadeVendida,ValorTotalDoItem")] ItemDaVenda itemDaVenda)
+        public async Task<IActionResult> Create([Bind("ItemDaVendaId,Vendaid,ProdutoId,QtdadeVendida,ValorTotalDoItem")] ItemDaVenda itemDaVenda)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +69,7 @@ namespace AppVendas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "ProdutoId", itemDaVenda.ProdutoId);
+            ViewData["Vendaid"] = new SelectList(_context.Vendas, "VendaId", "VendaId", itemDaVenda.Vendaid);
             return View(itemDaVenda);
         }
 
@@ -84,6 +87,7 @@ namespace AppVendas.Controllers
                 return NotFound();
             }
             ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "ProdutoId", itemDaVenda.ProdutoId);
+            ViewData["Vendaid"] = new SelectList(_context.Vendas, "VendaId", "VendaId", itemDaVenda.Vendaid);
             return View(itemDaVenda);
         }
 
@@ -92,7 +96,7 @@ namespace AppVendas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ItemDaVendaId,Vendaid,Venda,ProdutoId,QtdadeVendida,ValorTotalDoItem")] ItemDaVenda itemDaVenda)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ItemDaVendaId,Vendaid,ProdutoId,QtdadeVendida,ValorTotalDoItem")] ItemDaVenda itemDaVenda)
         {
             if (id != itemDaVenda.ItemDaVendaId)
             {
@@ -120,6 +124,7 @@ namespace AppVendas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "ProdutoId", itemDaVenda.ProdutoId);
+            ViewData["Vendaid"] = new SelectList(_context.Vendas, "VendaId", "VendaId", itemDaVenda.Vendaid);
             return View(itemDaVenda);
         }
 
@@ -133,6 +138,7 @@ namespace AppVendas.Controllers
 
             var itemDaVenda = await _context.ItemDaVenda
                 .Include(i => i.Produto)
+                .Include(i => i.Venda)
                 .FirstOrDefaultAsync(m => m.ItemDaVendaId == id);
             if (itemDaVenda == null)
             {

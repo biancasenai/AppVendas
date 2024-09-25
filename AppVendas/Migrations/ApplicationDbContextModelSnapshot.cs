@@ -30,7 +30,8 @@ namespace AppVendas.Migrations
 
                     b.Property<string>("CategoriaNome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CategoriaId");
 
@@ -81,15 +82,14 @@ namespace AppVendas.Migrations
                     b.Property<double>("ValorTotalDoItem")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("Venda")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("Vendaid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ItemDaVendaId");
 
                     b.HasIndex("ProdutoId");
+
+                    b.HasIndex("Vendaid");
 
                     b.ToTable("ItensDaVendas", (string)null);
                 });
@@ -156,7 +156,15 @@ namespace AppVendas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AppVendas.Models.Venda", "Venda")
+                        .WithMany()
+                        .HasForeignKey("Vendaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Produto");
+
+                    b.Navigation("Venda");
                 });
 
             modelBuilder.Entity("AppVendas.Models.Produto", b =>

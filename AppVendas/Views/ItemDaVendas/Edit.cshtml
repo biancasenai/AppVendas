@@ -15,13 +15,8 @@
             <input type="hidden" asp-for="ItemDaVendaId" />
             <div class="form-group">
                 <label asp-for="Vendaid" class="control-label"></label>
-                <input asp-for="Vendaid" class="form-control" />
+                <select asp-for="Vendaid" class="form-control" asp-items="ViewBag.Vendaid"></select>
                 <span asp-validation-for="Vendaid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Venda" class="control-label"></label>
-                <input asp-for="Venda" class="form-control" />
-                <span asp-validation-for="Venda" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProdutoId" class="control-label"></label>
