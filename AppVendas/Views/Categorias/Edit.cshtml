@@ -8,9 +8,9 @@
     <span class="display-6 w-75 justify-content-center">Cadastro de Categorias</span>
 </div>
 
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CategoriaId" />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="CategoriaId" />
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -42,17 +42,17 @@
         </div>
 
     </div>
-<div class="row">
-    <div class="col-md-4">
-
-        
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
     </div>
-</div>
-        </form>
+    </div>
+</form>
 
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
